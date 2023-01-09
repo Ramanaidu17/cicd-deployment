@@ -8,6 +8,8 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="289aca7f-46c5-438b-aa55-cd840d75584d" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="f99b6b11-ddc5-4128-9230-62fa6f7cd9f5" file="cicd-${env}.yaml" />
+	<global-property doc:name="Global Property" doc:id="99eec34b-5bb4-4d90-91d5-3dd7b9de7e1a" name="env" value="dev" />
 	<flow name="cicd-deploymentFlow" doc:id="1e445e45-2264-44af-8bfb-946d76517858" >
 		<http:listener doc:name="Listener" doc:id="4d8e829f-f252-4cc4-9b35-e96907babc83" config-ref="HTTP_Listener_config" path="/cicd-deployment"/>
 		<logger level="INFO" doc:name="Logger" doc:id="f3c7bbdc-194f-43e6-a95a-f2c0349c3efd" message="flow inititated:::"/>
@@ -17,7 +19,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 output application/json
 ---
 {
-	"message" : "Hello world"
+	"message" : p('resource.name')
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
